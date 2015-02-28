@@ -1,0 +1,22 @@
+Golf(tab A, tab B)
+	znajdź punkt o najmniejszej współrzędnej y (jeśli są dwa, to weź ten o mniejszej współrzędnej x) i przypisz go do s
+	złącz pozostałe punkty w listę C
+	posortuj listę C kątowo przeciwnie do wskazówek zegara względem s (jak w algorytmie Grahama)
+	idąc od jednego końca listy sumuj dołki(s jest dołkiem to +1, wpp -1) i golfistow(s jest golfista to +1, wpp -1), zatrzymaj się gdy suma wyniesie -1
+	połącz s z punktem, na którym się zatrzymałeś
+	rekurencyjnie wywołaj Golf dla obu pozostałych zbiorów
+
+Czas działania: 
+	sortowanie kątowe zajmuje O(nlogn)
+	pesymistycznie punkt do pary będzie znajdował się na końcu, zatem przejrzenie listy zajmie O(n)
+	wywołujemy dla podzbiorów, pesymistycznie podzbiór jest o jeden mniejszy niż oryginał, czyli O(n) razy
+	pesymistycznie czas działania wynosi O(n^2logn)
+
+Dla każdego n-elementowego zbioru punktów czerwonych i n-elementowego zbioru punktów niebieskich istnieje dopasowanie jak w zadaniu.
+Dowód indukcyjny ze względu na ilość punktów:
+	1) Dla 1-el zbioru niebieskich i czerwonych jest połączenie bez przecięć
+	2) Załóżmy, że dla każdego k < n + 1 istnieje połączenie, gdzie k to liczność zbioru niebieskich i liczność zbioru czerwonych
+	3) Mająć n+1 elementowy zbiór punktów niebieskich i tak samo liczny zbiór punktów czerwonych wykonujemy algorytm Golf bez zejścia rekurencyjnego na końcu.
+	   Dostajemy dwa zbiory punktów niebieskich i czerwonych, każdy o takiej samej liczbie czerwonych co niebieskich, które leżą na dwóch oddzielnych półpłaszczyznach
+	   oddzielone linią między punktem s a punktem w drugim kolorze. Ponieważ oba powstałe zbiory mają co najwyżej n < n + 1 elementów to z założenia indukcyjnego istnieje w nich
+	   odpowiednie dopasowanie. Zatem dla n+1 istnieje dopasowanie.

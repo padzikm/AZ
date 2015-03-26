@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{listings}
+
+
+\title{Dokumentacja projektu}
+\date{\today}
+
+\author{
+  Michał Padzik\\
+  \texttt{padzikm@student.mini.pw.edu.pl}
+  \and
+  Albert Wolant\\
+  \texttt{wolanta@student.mini.pw.edu.pl}
+}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+
+\section{Opis problemu}
+
+\paragraph{Golf}
+Na polu golfowym znajduje się $n$ piłeczek oraz $n$ dołków na piłeczki. Golfiści chcą jednocześnie, każdy swoją piłeczkę, umieścić, w którymś z dołków. W tym celu ustalają między sobą, który celuje do którego dołka, ale w taki sposób, by tory ich piłeczek się nie przecinały, co gwarantuje brak zderzeń piłeczek. Załóżmy, że piłeczki i dołki są punktami na płaszczyźnie oraz, że żadne trzy z tych punktów nie są współliniowe i że tory piłeczek są odcinkami prostej. Przedstaw działający w czasie $O(n^2 log( n))$ algorytm przydzielania piłeczek do dołków tak, aby żadne dwa tory piłeczek nie przecinały się.
+
+\section{Format danych}
+W poniższej sekcji znajduje się proponowany format danych wejściowych i wyjściowych razem z przykładami.
+
+\subsection{Dane wejściowe}
+Dane wejściowe mają format pliku tekstowego. Struktura tego pliku jest następująca:
+\begin{enumerate}
+\item Liczba par (golfista, dołek) w nowej linii.
+\item Współrzędne $x$ i $y$ golfisty, oddzielone spacją, w nowej linii. Ta linia występuje tyle razy, ile jest golfistów.
+\item Pusta liniia.
+\item Współrzędne $x$ i $y$ dołka, oddzielone spacją, w nowej linii. Ta linia występuje tyle razy, ile jest golfistów.
+\end{enumerate}
+
+\subsection{Dane wyjściowe}
+Dane wyjściowe mają format pliku tekstowego. Plik ten składa się z sekwencji następującej postaci:
+\begin{enumerate}
+\item Współrzędne $x$ i $y$ golfisty, oddzielone spacją, w nowej linii.
+\item Współrzędne $x$ i $y$ dołka, do którego strzela powyższy golfista, oddzielone spacją, w nowej linii.
+\item Pusta linia.
+\end{enumerate}
+W pliku występuje tyle sekwencji przedstawionej wyżej postaci, ile jest par (golfista, dołek). Sekwencje są umieszczone jedna po drugiej.
+
+\subsection{Przykład}
+
+\subsubsection{Przykładowy plik wejściowy}
+
+\lstset{
+numbers=left,
+frame=single
+}
+\begin{lstlisting}
+3
+0 0
+2.5 3.5
+3.5 4.5
+
+1 0
+10.45 20.5
+4 2
+\end{lstlisting}
+Plik zawiera dane 3 golfistów o współrzędnych $(0; 0)$, $(2.5; 3.5)$ i $(3.5; 4.5)$ oraz 3 dołków o współrzędnych $(1; 0)$, $(10.45; 20.5)$ i $(4; 2)$.
+
+\subsubsection{Przykładowy plik wyjściowy}
+\begin{lstlisting}
+0 0
+1 0
+
+2.5 3.5
+4 2
+
+3.5 4.5
+10.45 20.5
+
+\end{lstlisting}
+Plik zawiera 3 dopasowane pary. Golfista o współrzędnych $(0; 0)$ strzela do dołka o współrzędnych $(1; 0)$, golfista o współrzędnych $(2.5; 3.5)$ strzela do dołka o współrzędnych $(4; 2)$, a golfista o współrzędnych $(3.5; 4.5)$ strzela do dołka o współrzędnych $(10.45; 20.5)$.
+
+\newpage
+\section{Opis rozwiązania}
+
+Poniżej zamieszczamy proponowany algorytm rozwiązania problemu w postaci opisowego pseudokodu:
+
+\paragraph{Dane}
+\begin{itemize}
+\item Lista $G$ punktów oznaczających pozycje golfistów.
+\item Lista $D$ punktów oznaczających pozycje dołków.
+\end{itemize}
+
+\paragraph{Algorytm}
+\begin{enumerate}
+\item $s :=$ punkt o najmniejszej współrzędnej $y$ w listach $G$ i $D$ (jeżeli jest kilka takich punktów to weź ten z najmnjiejszą współrzędną $x$).
+\item Złącz pozostałe punkty w listę $C$.
+\item Posortuj listę $C$ kątowo, przeciwnie do ruchu wskazówek zegara, względem punktu $s$.
+\item Idąc od początku listy $C$ stwórz sumę $S$.
+	\begin{enumerate}
+	\item $S := 0$.
+	\item $c :=$ pierwszy punkt listy $C$.
+	\item Dopóki $S\neq-1$
+		\begin{enumerate}
+		\item Jeżeli $s$ jest dołkiem i $c$ jest golfistą to $S--$
+		\item Jeżeli $s$ jest dołkiem i $c$ jest dołkiem to $S++$
+		\item Jeżeli $s$ jest golfistą i $c$ jest golfistą to $S++$
+		\item Jeżeli $s$ jest golfistą i $c$ jest dołkiem to $S--$
+		\item $c:=$ kolejny element na licie $C$.
+		\end{enumerate}
+	\end{enumerate}
+\item Połącz $s$ z punktem poprzedzającym $c$ na liście $C$. Niech ten punkt to $p$.
+\item Rekurencyjnie wywołaj algorytm dla punktów poprzedzających $p$ na liście $C$ oraz dla punktów następujących po $p$ na liście $C$.
+\end{enumerate}
+
+
+
+\section{Analiza poprawności}
+Poniżej zamieszczamy dowód, że dopasowanie punktów zdefiniowane w zadaniu zawsze istnieje oraz przedstawiony powyżej algorytm znajduje takie dopasowanie. Będzie to dowód indukcyjny ze względu na liczbę par (golfista, dołek). 
+Oznaczmy liczbę tych par w zadaniu przez $n$. 
+
+\begin{enumerate}
+\item Jeśli $n=1$, dopasowanie zawsze istnieje w sposób oczywisty poprzez połączenie jedynych dwóch punktów zadania. Algorytm znajdzie takie dopasowanie, ponieważ wybierze jeden z punktów jako $s$ i dołączy do niego drugi jako jedyny punkt listy $C$.
+\item Dla $n>1$ zakładamy, że dopasowanie istnieje dla każdego $k<n$ par i algorytm je znajduje.\\
+Wykonajmy teraz przedstawiony algorytm bez zejść rekurenycjnych z punktu 6. Dostaniemy wówczas $2$ zbiory punktów oddzielone prostą $sp$. W każdym z tych zbiorów jest tyle samo dołków i golfistów i jest tam mniej niż $n$ par. Wynika to z wartości sumy $S$. Zatem dla każdego z tych zbiorów istnieje odpowiednie dopasowanie i przytoczony algorytm je znajduje. Wynika to z założenia indukcyjnego. Dodatkowo rozwiązania można połączyć bez straty poprawnoci, bo leżą na różnych półpłaszczyznach. Po dodaniu do tego rozwiązania odcinka $sp$ mamy rozwiązanie problemu rozmiaru $n$ i znalezione zostało przedstawionym algorytmem.
+\item Z zasady indukcji matematycznej wynika, że przedstawiony algorytm jest poprawny.
+\end{enumerate}
+
+
+\section{Analiza złożonoci}
+Niech $n$ oznacza liczbę par (golfista, dołek) w zadaniu.
+\begin{itemize}
+\item Punkt 1. algorytmu można wykonać w czasie $O(n)$.
+\item Punkt 2. algorytmu można wykonać w czasie $O(1)$ przy odpowiedniej implementacji.
+\item Sortowanie kątowe w punkcie 3. można wykonać w czasie $O(nlog(n))$.
+\item W pesymistycznym wypadku w punkcie 4. trzeba będzie przejżeć całą listę. Trwa to $O(n)$.
+\item Dodanie nowej pary do rozwiązania można wykonać w czasie stałym.
+\item W pesymistycznym przypadku, czyli wtedy gdy punkt $p$ jest ostatnim na liście $C$, zawsze będzie wykonywane tylko jedno wywołanie rekurencyjne. W takim przypadku podzbiór, dla którego przeprowadzimy to zejście rekurenycjne, ma jedną parę mniej. Zatem pesymistycznie wykonamy $O(n)$ zejść rekurencyjnych.
+\end{itemize}
+Podsumowując pesymistyczna złożoność czasowa algorytmu wynosi $O(n^2log(n))$.
+
+\end{document}

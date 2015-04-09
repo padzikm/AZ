@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AZ
+namespace Golfers
 {
-    class Tester
+    public class Tester
     {
         public static bool Test(List<Tuple<Point, Point>> mapping)
         {

@@ -1,6 +1,6 @@
-﻿namespace AZ
+﻿namespace Golfers
 {
-    class Point
+    public class Point
     {
         public double X { get; private set; }
 

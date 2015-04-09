@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
-namespace AZ
+namespace Golfers
 {
-    class DataIO
+    public class DataIO
     {
         public static List<Point> Read(string path)
         {

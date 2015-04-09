@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AZ
+namespace Golfers
 {
-    class Algorithm
+    public class Algorithm
     {
         public static List<Tuple<Point, Point>> Solve(List<Point> points)
         {

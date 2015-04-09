@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace AZ
+namespace Golfers
 {
-    static class PointExtensions
+    public static class PointExtensions
     {
         /// <summary>
         /// Iloczyn wektorowy

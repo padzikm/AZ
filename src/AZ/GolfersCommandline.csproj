@@ -7,7 +7,7 @@
     <ProjectGuid>{BBB20689-D1D0-491E-B53F-369B0F50CADA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AZ</RootNamespace>
+    <RootNamespace>Golfers</RootNamespace>
     <AssemblyName>AZ</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -42,17 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm.cs" />
-    <Compile Include="DataReader.cs" />
-    <Compile Include="Point.cs" />
-    <Compile Include="PointExtensions.cs" />
-    <Compile Include="PointType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tester.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Golfers\Golfers.csproj">
+      <Project>{f3ed1628-0afc-4c87-893f-44f23f767570}</Project>
+      <Name>Golfers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

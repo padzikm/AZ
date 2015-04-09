@@ -1,8 +1,9 @@
 ﻿using System;
+using Golfers;
 
-namespace AZ
+namespace GolfersCommandline
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {

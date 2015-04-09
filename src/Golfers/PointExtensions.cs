@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Golfers
 {
@@ -38,6 +39,18 @@ namespace Golfers
             points.Sort((p1, p2) => p1.CrossProduct(p2, p) > 0 ? -1 : 1);
 
             return points;
+        }
+
+        /// <summary>
+        /// Metoda zwraca informację czy punkty są współliniowe
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="p3"></param>
+        /// <returns></returns>
+        public static bool ArePointsCollinear(Point p1, Point p2, Point p3)
+        {
+            return (p2.Y - p1.Y)*(p3.X - p2.X) == (p3.Y - p2.Y)*(p2.X - p1.X);
         }
     }
 }

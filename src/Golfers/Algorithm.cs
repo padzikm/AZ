@@ -6,7 +6,7 @@ namespace Golfers
 {
     public class Algorithm
     {
-        public static List<Tuple<Point, Point>> Solve(List<Point> points)
+        public List<Tuple<Point, Point>> Solve(List<Point> points)
         {
             if (points == null || points.Count == 0)
                 return new List<Tuple<Point, Point>>();

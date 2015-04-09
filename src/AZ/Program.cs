@@ -18,13 +18,21 @@ namespace GolfersCommandline
 
             var data = DataIO.Read(input);
 
-            var result = Algorithm.Solve(data);
+            var validator = new Validator();
+            if(!validator.IsDataValid(data))
+            {
+                Console.WriteLine("Invalid input data - points are collinear.");
+                return;
+            }
+
+            var solver = new Algorithm();
+            var result = solver.Solve(data);
 
             DataIO.Write(output, result);
 
-            var test = Tester.Test(result);
+            var test = validator.IsSolutionValid(result);
 
-            Console.WriteLine("\nTest result: {0}\n", test ? "success" : "failure");
+            Console.WriteLine("\nIsSolutionValid result: {0}\n", test ? "success" : "failure");
         }
     }
 }

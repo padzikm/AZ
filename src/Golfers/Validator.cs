@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Golfers
 {
-    public class Tester
+    public class Validator
     {
-        public static bool Test(List<Tuple<Point, Point>> mapping)
+        public bool IsSolutionValid(List<Tuple<Point, Point>> mapping)
         {
             for (var i = 0; i < mapping.Count - 1; ++i)
                 for (var j = i + 1; j < mapping.Count; ++j)
@@ -20,6 +20,27 @@ namespace Golfers
                 }
 
             return true;
+        }
+
+        public bool IsDataValid(List<Point> points)
+        {
+            int golfersCount = 0;
+            int holesCount = 0;
+
+            for (int i = 0; i < points.Count; ++i)
+            {
+                if (points[i].Type == PointType.Golfer)
+                    ++golfersCount;
+                else
+                    ++holesCount;
+
+                for (int j = i + 1; j < points.Count; ++j)
+                    for (int k = j + 1; k < points.Count; ++k)
+                        if (PointExtensions.ArePointsCollinear(points[i], points[j], points[k]))
+                            return false;
+            }
+
+            return golfersCount == holesCount;
         }
     }
 }

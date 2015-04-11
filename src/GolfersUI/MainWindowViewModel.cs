@@ -13,11 +13,14 @@ namespace GolfersUI
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private int newPointsTypeCounter;
+
         public MainWindowViewModel()
         {
             Points = new ObservableCollection<Golfers.Point>();
             Solution = new ObservableCollection<Tuple<Golfers.Point, Golfers.Point>>();
             IsReady = true;
+            newPointsTypeCounter = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,6 +53,8 @@ namespace GolfersUI
                     {
                         var loadedPoints = dataIO.Read(dialog.FileName);
                         Points = new ObservableCollection<Golfers.Point>(loadedPoints);
+                        Solution.Clear();
+                        OnPropertyChanged(new PropertyChangedEventArgs("Solution"));
                     }
                     catch (Exception)
                     {
@@ -141,6 +146,32 @@ namespace GolfersUI
                     Solution = new ObservableCollection<Tuple<Golfers.Point, Golfers.Point>>(solution);
                     IsReady = true;
 
+                });
+            }
+        }
+
+        public ICommand MouseCommand
+        {
+            get
+            {
+                return new RelayCommandWithParams<System.Windows.Point>(point => 
+                {
+                    Points.Add(new Golfers.Point(point.X, point.Y, newPointsTypeCounter++ % 2 == 0 ? PointType.Golfer : PointType.Hole));
+                    OnPropertyChanged(new PropertyChangedEventArgs("Points"));
+                });
+            }
+        }
+
+        public ICommand NewCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Points.Clear();
+                    OnPropertyChanged(new PropertyChangedEventArgs("Points"));
+                    Solution.Clear();
+                    OnPropertyChanged(new PropertyChangedEventArgs("Solution"));
                 });
             }
         }

@@ -6,20 +6,62 @@
     <Window.DataContext>
         <local:MainWindowViewModel x:Name="mainViewModel"/>
     </Window.DataContext>
+    
+    <Window.Resources>
+        <local:PointsMultiConverter x:Key="PointsMultiConverter"/>
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem x:Name="fileMenuItem" Header="_Plik">
+                <MenuItem x:Name="newField" Header="Nowe zadanie" Command="{Binding NewCommand}" IsEnabled="{Binding IsReady}"/>
                 <MenuItem x:Name="loadFileMenuItem" Header="Wczytaj zadanie z pliku" Command="{Binding LoadFileCommand}" IsEnabled="{Binding IsReady}"/>
                 <MenuItem x:Name="saveFileMenuItem" Header="Zapisz rozwiązanie do pliku" Command="{Binding SaveFileCommand}" IsEnabled="{Binding IsReady}"/>
                 <MenuItem x:Name="exitMenuItem" Header="Zakończ" Command="{Binding ExitCommand}"/>
             </MenuItem>
         </Menu>
-        
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Slider Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" Minimum="1" x:Name="slider"/>
+                <ScrollViewer Name="scrollViewer" Grid.Column="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+
+                    <Grid Name="grid" Width="400" Height="400" RenderTransformOrigin="0.5,0.5">
+                        <Grid.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform x:Name="scaleTransform"/>
+                            </TransformGroup>
+                        </Grid.LayoutTransform>
+                        <Viewbox Grid.Column="0" Grid.Row="0">
+                            
+                            <ItemsControl>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas Width="10000" Height="10000" Background="LightGreen" local:MouseBehaviour.MouseUpCommand="{Binding MouseCommand}"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemsSource>
+                                    <MultiBinding Converter="{StaticResource PointsMultiConverter}">
+                                        <Binding Path="Points"/>
+                                        <Binding Path="Solution"/>
+                                    </MultiBinding>
+                                </ItemsControl.ItemsSource>
+                            </ItemsControl>
+                            
+                            
+                        </Viewbox>
+                    </Grid>
+
+                </ScrollViewer>
+            </Grid>
 
             <Button Grid.Row="1" x:Name="solveButton" Command="{Binding SolveCommand}" Width="100" Margin="10,10,10,10" IsEnabled="{Binding IsReady}">Połącz punkty</Button>
         </Grid>

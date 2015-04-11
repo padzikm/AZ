@@ -16,7 +16,9 @@ namespace GolfersCommandline
             var input = args[0];
             var output = args[1];
 
-            var data = DataIO.Read(input);
+            var dataIO = new DataIO();
+
+            var data = dataIO.Read(input);
 
             var validator = new Validator();
             if(!validator.IsDataValid(data))
@@ -28,7 +30,7 @@ namespace GolfersCommandline
             var solver = new Algorithm();
             var result = solver.Solve(data);
 
-            DataIO.Write(output, result);
+            dataIO.Write(output, result);
 
             var test = validator.IsSolutionValid(result);
 

@@ -7,7 +7,7 @@ namespace Golfers
 {
     public class DataIO
     {
-        public static List<Point> Read(string path)
+        public List<Point> Read(string path)
         {
             var list1 = new List<Point>();
             var list2 = new List<Point>();
@@ -46,7 +46,7 @@ namespace Golfers
             return list1;
         }
 
-        public static void Write(string path, List<Tuple<Point, Point>> data)
+        public void Write(string path, List<Tuple<Point, Point>> data)
         {
             using (var writer = File.CreateText(path))
             {

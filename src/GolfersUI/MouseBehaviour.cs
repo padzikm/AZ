@@ -18,7 +18,7 @@ namespace GolfersUI
         private static void MouseUpCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement element = (FrameworkElement)d;
-            element.MouseRightButtonUp += new MouseButtonEventHandler(element_MouseUp);
+            element.MouseLeftButtonDown += new MouseButtonEventHandler(element_MouseUp);
         }
 
         static void element_MouseUp(object sender, MouseButtonEventArgs e)

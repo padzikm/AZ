@@ -28,11 +28,11 @@ namespace GolfersUI
             InitializeComponent();
 
             scrollViewer.ScrollChanged += OnScrollViewerScrollChanged;
-            scrollViewer.MouseLeftButtonUp += OnMouseLeftButtonUp;
-            scrollViewer.PreviewMouseLeftButtonUp += OnMouseLeftButtonUp;
+            scrollViewer.MouseRightButtonUp += OnMouseRightButtonUp;
+            scrollViewer.PreviewMouseRightButtonUp += OnMouseRightButtonUp;
             scrollViewer.PreviewMouseWheel += OnPreviewMouseWheel;
 
-            scrollViewer.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
+            scrollViewer.PreviewMouseRightButtonDown += OnMouseRightButtonDown;
             scrollViewer.MouseMove += OnMouseMove;
 
             slider.ValueChanged += OnSliderValueChanged;
@@ -54,7 +54,7 @@ namespace GolfersUI
             }
         }
 
-        void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             var mousePos = e.GetPosition(scrollViewer);
             if (mousePos.X <= scrollViewer.ViewportWidth && mousePos.Y < scrollViewer.ViewportHeight)
@@ -81,7 +81,7 @@ namespace GolfersUI
             e.Handled = true;
         }
 
-        void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        void OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             scrollViewer.Cursor = Cursors.Arrow;
             scrollViewer.ReleaseMouseCapture();

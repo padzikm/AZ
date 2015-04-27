@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GolfersCommandline", "AZ\GolfersCommandline.csproj", "{BBB20689-D1D0-491E-B53F-369B0F50CADA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GolfersCommandline", "GolfersCommandline\GolfersCommandline.csproj", "{BBB20689-D1D0-491E-B53F-369B0F50CADA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golfers", "Golfers\Golfers.csproj", "{F3ED1628-0AFC-4C87-893F-44F23F767570}"
 EndProject

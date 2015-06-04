@@ -48,6 +48,8 @@ namespace Golfers
             res1.AddRange(res2);
             res1.Add(res);
 
+            points.Add(min);
+
             return res1;
         }
     }
